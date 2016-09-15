@@ -18,6 +18,9 @@ import getOpenings
 import calculateGallons
 import displayCeilingResults
 import displayWallResults
+import validateQuestion
+import validateNumber
+import getNumber
 
 # Declare some global constants
 global DOOR_AREA, WINDOW_AREA, SQ_FEET_PER_GALLON
