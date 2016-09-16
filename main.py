@@ -21,7 +21,8 @@ import displayWallResults
 import validateQuestion
 import validateNumber
 import getNumber
-import swap
+import printMenu
+import getUserSelection
 
 # Declare some global constants
 global DOOR_AREA, WINDOW_AREA, SQ_FEET_PER_GALLON
@@ -39,49 +40,52 @@ def main():
   ceilingGallons = float(0)
   doors = int(0)
   windows = int(0)
-  size = int(0)
-  index = int(0)
-  areasWall = []
-  areasCeiling = []
-  gallonsWall = []
-  gallonsCeiling = []
+  menuSelection = int(0)
+
   
-  size = raw_input("Enter number of rooms to paint: ")
-  size = int(size)
-
-  for index in range(0, size):
-    # Get room dimensions
-    wallArea = getRoomArea.getRoomArea(wallArea)
-
-    # Get number of doors
-    doors = getDoors.getDoors(doors)
-    doorsArea = doors * DOOR_AREA
-
-    # Get number of windows
-    windows = getWindows.getWindows(windows)
-    windowsArea = windows * WINDOW_AREA
-
-    # Recalculates area to consider windows and doors
-    wallArea = wallArea - doorsArea - windowsArea
-
-    # Include ceiling?
-    ceilingArea = getCeiling.getCeiling(ceilingArea)
-
-    # Calculate gallons required to paint the wall
-    wallGallons = calculateGallons.calculateGallons(wallGallons, wallArea)
-
-    # Calculate gallons required to paint the ceiling
-    ceilingGallons = calculateGallons.calculateGallons(ceilingGallons, ceilingArea)
+  while (menuSelection != 3):
+    # print menu
+    printMenu.printMenu()
     
-    areasWall.append(wallArea)
-    areasCeiling.append(ceilingArea)
-    gallonsWall.append(wallGallons)
-    gallonsCeiling.append(ceilingGallons)
+    # get user selection
+    menuSelection = getUserSelection.getUserSelection(menuSelection)
     
-  # Display the results
-  displayWallResults.displayWallResults(areasWall, gallonsWall, size)
-  displayCeilingResults.displayCeilingResults(areasCeiling, gallonsCeiling, size)
+    if (menuSelection == 1):
+      # Get room dimensions
+      wallArea = getRoomArea.getRoomArea(wallArea)
 
+      # Get number of doors
+      doors = getDoors.getDoors(doors)
+      doorsArea = doors * DOOR_AREA
+
+      # Get number of windows
+      windows = getWindows.getWindows(windows)
+      windowsArea = windows * WINDOW_AREA
+
+      # Recalculates area to consider windows and doors
+      wallArea = wallArea - doorsArea - windowsArea
+
+      # Include ceiling?
+      ceilingArea = getCeiling.getCeiling(ceilingArea)
+
+      # Calculate gallons required to paint the wall
+      wallGallons = calculateGallons.calculateGallons(wallGallons, wallArea)
+
+      # Calculate gallons required to paint the ceiling
+      ceilingGallons = calculateGallons.calculateGallons(ceilingGallons, ceilingArea)
+
+    elif (menuSelection == 2):
+      # Display the results
+      displayWallResults.displayWallResults(wallArea, wallGallons)
+      displayCeilingResults.displayCeilingResults(ceilingArea, ceilingGallons)
+
+    elif (menuSelection == 3):
+      # no need to do anything here, when menuSelection == 3 the program will end
+      print "Good bye!"
+      
+    else:
+      print "That is an invalid selection. Try again."
+      
 # invoke main module when called from the terminal
 if __name__ == "__main__":
     main()
